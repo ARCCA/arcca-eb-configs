@@ -1,0 +1,26 @@
+diff --git a/arch/makefile.include.gnu b/arch/makefile.include.gnu
+index e5b04fd..6b9db59 100644
+--- a/arch/makefile.include.gnu
++++ b/arch/makefile.include.gnu
+@@ -54,17 +54,17 @@ FFLAGS     += -march=native
+ FFLAGS     += -fallow-argument-mismatch
+ 
+ # BLAS and LAPACK (mandatory)
+-OPENBLAS_ROOT ?= /path/to/your/openblas/installation
+-BLASPACK    = -L$(OPENBLAS_ROOT)/lib -lopenblas
++OPENBLAS_ROOT ?= $(EBROOTFLEXIBLAS)
++BLASPACK    = -L$(OPENBLAS_ROOT)/lib -lflexiblas
+ 
+ # scaLAPACK (mandatory)
+-SCALAPACK_ROOT ?= /path/to/your/scalapack/installation
++SCALAPACK_ROOT ?= $(EBROOTSCALAPACK)
+ SCALAPACK   = -L$(SCALAPACK_ROOT)/lib -lscalapack
+ 
+ LLIBS      += $(SCALAPACK) $(BLASPACK)
+ 
+ # FFTW (mandatory)
+-FFTW_ROOT  ?= /path/to/your/fftw/installation
++FFTW_ROOT  ?= $(EBROOTFFTW)
+ LLIBS      += -L$(FFTW_ROOT)/lib -lfftw3
+ INCS       += -I$(FFTW_ROOT)/include
+ 

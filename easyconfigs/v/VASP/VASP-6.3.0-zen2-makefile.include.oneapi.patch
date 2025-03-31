@@ -1,0 +1,73 @@
+diff --git a/arch/makefile.include.intel b/arch/makefile.include.intel
+index 457819e..e5e155f 100644
+--- a/arch/makefile.include.intel
++++ b/arch/makefile.include.intel
+@@ -5,14 +5,13 @@ CPP_OPTIONS = -DHOST=\"LinuxIFC\" \
+               -DCACHE_SIZE=4000 \
+               -Davoidalloc \
+               -Dvasp6 \
+-              -Duse_bse_te \
+               -Dtbdyn \
+               -Dfock_dblbuf
+ 
+ CPP         = fpp -f_com=no -free -w0  $*$(FUFFIX) $*$(SUFFIX) $(CPP_OPTIONS)
+ 
+-FC          = mpiifort
+-FCL         = mpiifort
++FC          = mpiifort -fc=ifx
++FCL         = mpiifort -fc=ifx
+ 
+ FREE        = -free -names lowercase
+ 
+@@ -29,7 +28,7 @@ OBJECTS_O2 += fft3dlib.o
+ # For what used to be vasp.5.lib
+ CPP_LIB     = $(CPP)
+ FC_LIB      = $(FC)
+-CC_LIB      = icc
++CC_LIB      = icx
+ CFLAGS_LIB  = -O
+ FFLAGS_LIB  = -O1
+ FREE_LIB    = $(FREE)
+@@ -37,7 +36,7 @@ FREE_LIB    = $(FREE)
+ OBJECTS_LIB = linpack_double.o
+ 
+ # For the parser library
+-CXX_PARS    = icpc
++CXX_PARS    = icpx
+ LLIBS       = -lstdc++
+ 
+ ##
+@@ -48,16 +47,17 @@ LLIBS       = -lstdc++
+ 
+ # When compiling on the target machine itself, change this to the
+ # relevant target when cross-compiling for another architecture
+-FFLAGS     += -xHOST
++VASP_TARGET_CPU ?= -O3 -axCORE-AVX2
++FFLAGS     += $(VASP_TARGET_CPU)
+ 
+ # Intel MKL (FFTW, BLAS, LAPACK, and scaLAPACK)
+ # (Note: for Intel Parallel Studio's MKL use -mkl instead of -qmkl)
+ FCL        += -qmkl=sequential
+-MKLROOT    ?= /path/to/your/mkl/installation
++MKLROOT    ?= $(EBROOTIMKL)
+ LLIBS      += -L$(MKLROOT)/lib/intel64 -lmkl_scalapack_lp64 -lmkl_blacs_intelmpi_lp64
+ INCS        =-I$(MKLROOT)/include/fftw
+ 
+-# HDF5-support (optional but strongly recommended)
++# HDF5-support (optional but strongly recommended, and mandatory for some features)
+ #CPP_OPTIONS+= -DVASP_HDF5
+ #HDF5_ROOT  ?= /path/to/your/hdf5/installation
+ #LLIBS      += -L$(HDF5_ROOT)/lib -lhdf5_fortran
+@@ -67,3 +67,12 @@ INCS        =-I$(MKLROOT)/include/fftw
+ #CPP_OPTIONS    += -DVASP2WANNIER90
+ #WANNIER90_ROOT ?= /path/to/your/wannier90/installation
+ #LLIBS          += -L$(WANNIER90_ROOT)/lib -lwannier
++
++# For machine learning library vaspml (experimental)
++#CPP_OPTIONS += -Dlibvaspml
++#CPP_OPTIONS += -DVASPML_USE_CBLAS
++#CPP_OPTIONS += -DVASPML_USE_MKL
++#CPP_OPTIONS += -DVASPML_DEBUG_LEVEL=3
++#CXX_ML      = mpiicpc -cxx=icpx
++#CXXFLAGS_ML = -O3 -std=c++17 -Wall
++#INCLUDE_ML  =
