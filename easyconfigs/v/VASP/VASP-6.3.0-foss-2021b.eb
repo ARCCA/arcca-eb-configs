@@ -55,7 +55,7 @@ buildopts += 'DEPS=1 '  # required for VASP parallel builds
 _vasp_test_mpirun = "mpirun -np 4"
 
 # skip tests that are too long
-_vasp_test_skip = 'HEG_333_LW '
+_vasp_test_skip = 'HEG_333_LW'
 
 _vasp_test_env = [
     "export OMP_NUM_THREADS=1",
