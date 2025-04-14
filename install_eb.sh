@@ -1,6 +1,8 @@
 #!/bin/bash
 # https://docs.easybuild.io/installation/#eb_as_module
 
+set -eu 
+
 #
 # Step 1: Installing EasyBuild into a temporary location
 #
@@ -27,4 +29,4 @@ eb --install-latest-eb-release --prefix $root
 
 mkdir -p $root/etc
 eb --confighelp > $root/etc/config.cfg
-sed "s,^#prefix=,prefix=$root," ~/easybuild/etc/config.cfg
+sed -i "s,^#prefix=,prefix=$root," $root/etc/config.cfg

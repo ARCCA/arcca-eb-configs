@@ -9,7 +9,7 @@ export EASYBUILD_SOURCEPATH=$root/sources
 export EASYBUILD_BUILDPATH=/tmp/$USER/easybuild/build/$arch
 export EASYBUILD_CONTAINERPATH=$root/containers/$arch
 export EASYBUILD_REPOSITORYPATH=$root/ebfiles_repo
-export EASYBUILD_SEARCH_PATHS=$root/arcca-eb-configs/easyconfigs
+export EASYBUILD_SEARCH_PATHS=$root/arcca-eb-configs/easyconfigs:$root/software/EasyBuild/5.0.0/easybuild/easyconfigs
 export EASYBUILD_ROBOT_PATHS=$root/arcca-eb-configs/easyconfigs:$root/software/EasyBuild/5.0.0/easybuild/easyconfigs
 
 #installpath-modules  (E) = /opt/easybuild/modules/linux-rocky9-zen4
