@@ -1,0 +1,26 @@
+easyblock = 'EB_Mamba'
+
+name = 'Miniforge3'
+version = '24.11.3-2'
+
+homepage = 'https://github.com/conda-forge/miniforge'
+description = """Miniforge is a free minimal installer for conda and Mamba specific
+ to conda-forge."""
+
+toolchain = SYSTEM
+
+source_urls = ['https://github.com/conda-forge/miniforge/releases/download/%(version)s']
+local_arch = {'arm64': 'aarch64'}.get(ARCH, ARCH)
+sources = ['%%(name)s-%%(version)s-Linux-%s.sh' % local_arch]
+checksums = [
+    {
+        '%(name)s-%(version)s-Linux-x86_64.sh':
+            '65af53dad30b3fcbd1cb1d4ad62fd3a86221464754844544558aae3a28795189',
+        '%(name)s-%(version)s-Linux-ppc64le.sh':
+            '7e312337a1a34c88802ff300a50ff785c6db85a8e518ee1cdc0d58085e0ad08e',
+        '%(name)s-py312_%(version)s-Linux-aarch64.sh':
+            'd61942220d28e2103ad6303de808fec52d2e276fa698e2ae5d8ab865e194c504',
+    }
+]
+
+moduleclass = 'lang'
